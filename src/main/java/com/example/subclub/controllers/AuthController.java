@@ -1,18 +1,12 @@
 package com.example.subclub.controllers;
 
 
-import com.example.subclub.dto.ApplicationError;
 import com.example.subclub.dto.JWTokenRequest;
-import com.example.subclub.dto.JWTokenResponse;
+import com.example.subclub.dto.UserCreationDTO;
+import com.example.subclub.services.AuthService;
 import com.example.subclub.services.UserService;
-import com.example.subclub.untils.JWTokenUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,19 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
     private final UserService userService;
-    private final JWTokenUtil jwTokenUtil;
-    private final AuthenticationManager authenticationManager;
+    private final AuthService authService;
 
     @PostMapping("/login")
     public ResponseEntity<?> createAuthToken(@RequestBody JWTokenRequest request) {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getName(), request.getPassword()));
-        } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(new ApplicationError(HttpStatus.UNAUTHORIZED.value(), "Bad credentials"), HttpStatus.UNAUTHORIZED);
-        }
-        // повторный запрос в бд (по логам)
-        UserDetails userDetails = userService.loadUserByUsername(request.getName());
-        String token = jwTokenUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new JWTokenResponse(token));
+        return authService.createAuthToken(request);
+    }
+
+    @PostMapping("/registration")
+    public ResponseEntity<?> createNewUser(@RequestBody UserCreationDTO userDTO) {
+        return authService.createNewUser(userDTO);
     }
 }
