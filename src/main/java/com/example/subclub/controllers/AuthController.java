@@ -31,6 +31,7 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>(new ApplicationError(HttpStatus.UNAUTHORIZED.value(), "Bad credentials"), HttpStatus.UNAUTHORIZED);
         }
+        // повторный запрос в бд (по логам)
         UserDetails userDetails = userService.loadUserByUsername(request.getName());
         String token = jwTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JWTokenResponse(token));

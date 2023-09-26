@@ -5,6 +5,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -17,10 +19,11 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@NoArgsConstructor
 public class JWTokenUtil {
     private final Duration jwtLifetime = Duration.ofDays(14);
 
-    private final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.ES256);
+    private final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final String base64key = Encoders.BASE64.encode(key.getEncoded());
 
     public String generateToken(UserDetails userDetails) {
@@ -37,7 +40,7 @@ public class JWTokenUtil {
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(issuedDate)
                 .setExpiration(expiredDate)
-                .signWith(SignatureAlgorithm.ES256, base64key)
+                .signWith(SignatureAlgorithm.HS256, base64key)
                 .compact();
     }
 

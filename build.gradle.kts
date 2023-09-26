@@ -33,9 +33,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:3.1.3")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.1.3")
     implementation("org.springframework.boot:spring-boot-starter-security:3.1.3")
+
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
     implementation("org.flywaydb:flyway-core:9.21.2")
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-gradle-plugin
     implementation("org.springframework.boot:spring-boot-gradle-plugin:3.1.3")
 
 }
