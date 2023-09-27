@@ -26,3 +26,24 @@ values ('superuser', '$2a$12$7KIHOVHF1TJt2X51cMyyq.SqbX3Ek9EHt.Ol1o1O9dcQivg0v5i
 
 insert into users_roles (user_id, role_id)
 values (1, 2);
+
+create table media_type (
+    id serial primary key not null,
+    name varchar(50) not null
+);
+
+insert into media_type (name)
+values ('Films'), ('Series'), ('Short_films');
+
+create table titles (
+    id bigserial primary key not null,
+    title varchar(127) not null,
+    description varchar(4096) not null
+);
+
+create table content_type (
+    title_id bigint primary key not null,
+    media_type_id int not null,
+    foreign key (title_id) references titles(id),
+    foreign key (media_type_id) references media_type(id)
+)

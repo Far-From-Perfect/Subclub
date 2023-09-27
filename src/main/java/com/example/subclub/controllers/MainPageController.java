@@ -12,8 +12,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class MainPageController {
     @GetMapping("/")
-    public String home (Model model) {
-        model.addAttribute("title", "Main page");
+    public String home () {
         return "home";
     }
 

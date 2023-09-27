@@ -1,9 +1,9 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://postgres/subclub_db
-    username: subclub
-    password: secret
+    url: "jdbc:postgresql://postgres/subclub_db"
+    username: "subclub"
+    password: "secret"
   jpa:
     show-sql: true
     properties:

@@ -32,6 +32,7 @@ public class SecurityConfig {
                         requests.requestMatchers("/secured").authenticated()
                                 .requestMatchers("/info").authenticated()
                                 .requestMatchers("/ad-panel").hasRole("ADMIN")
+                                .requestMatchers("/create-title").hasRole("ADMIN")
                                 .anyRequest().permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
