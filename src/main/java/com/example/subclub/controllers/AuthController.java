@@ -4,7 +4,6 @@ package com.example.subclub.controllers;
 import com.example.subclub.dto.JWTokenRequest;
 import com.example.subclub.dto.UserCreationDTO;
 import com.example.subclub.services.AuthService;
-import com.example.subclub.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

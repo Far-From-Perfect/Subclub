@@ -1,26 +1,24 @@
 package com.example.subclub.services;
 
-import com.example.subclub.config.SecurityConfig;
 import com.example.subclub.dto.UserCreationDTO;
 import com.example.subclub.dto.UserDTO;
+import com.example.subclub.dto.UserInfoDTO;
 import com.example.subclub.entity.User;
 import com.example.subclub.repository.RoleRepository;
 import com.example.subclub.repository.UserRepository;
+import com.example.subclub.untils.UserMapper;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Base64;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,6 +28,12 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder passwordEncoder;
+    private UserMapper userMapper;
+
+    @Autowired
+    public void setUserMapper(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -68,6 +72,16 @@ public class UserService implements UserDetailsService {
                 String.format("User '%s' not found", username)
         ));
 
+        return castToUserDetails(user);
+    }
+
+    public List<UserInfoDTO> findAll() {
+        List<UserInfoDTO> userDetailsList = new ArrayList<>();
+        userRepository.findAll().forEach(user -> userDetailsList.add(userMapper.toDto(user)));
+        return userDetailsList;
+    }
+
+    private UserDetails castToUserDetails(User user) {
         return new org.springframework.security.core.userdetails.User(
                 user.getName(),
                 user.getPassword(),

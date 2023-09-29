@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
