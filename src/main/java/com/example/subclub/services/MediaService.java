@@ -61,7 +61,7 @@ public class MediaService {
                 .setDescription(titleDTO.getDescription())
                 .setMediaType(typeRepository.findByMediaTypename(titleDTO.getMediaType()).get());
         mediaRepository.save(title);
-        log.info("Saved new title: %s ", title.getTitle());
+        log.info(String.format("Saved new title: %s ", title.getTitle()));
         return ResponseEntity.ok(titleDTO.getTitle());
     }
 

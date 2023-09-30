@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) ->
                         requests.requestMatchers("/secured").authenticated()
                                 .requestMatchers("/info").authenticated()
+                                .requestMatchers("/favorites/{id}").access(new WebExpressionAuthorizationManager("hasRole('USER')"))
                                 .requestMatchers("/ad-panel").hasRole("ADMIN")
                                 .requestMatchers("/create-title").hasRole("ADMIN")
                                 .requestMatchers("/users").hasRole("ADMIN")

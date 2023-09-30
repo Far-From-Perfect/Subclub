@@ -12,10 +12,11 @@ create table roles (
 );
 
 create table users_roles (
-    user_id bigint not null primary key,
+    user_id bigint not null,
     role_id int not null,
     foreign key (user_id) references users(id),
-    foreign key (role_id) references roles(id)
+    foreign key (role_id) references roles(id),
+    constraint users_roles_pk primary key (user_id, role_id)
 );
 
 insert into roles (name)
@@ -46,4 +47,12 @@ create table content_type (
     media_type_id int not null,
     foreign key (title_id) references titles(id),
     foreign key (media_type_id) references media_type(id)
-)
+);
+
+create table users_titles (
+    user_id bigint not null,
+    title_id bigint not null,
+    foreign key (user_id) references users(id),
+    foreign key (title_id) references titles(id),
+    constraint users_titles_pk primary key (user_id, title_id)
+);
