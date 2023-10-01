@@ -12,13 +12,14 @@ services:
       test: ["CMD-SHELL", "sh -c 'pg_isready -U subclub -d subclub_db'"]
 
   app:
-    image: 'app'
+    image: 'test_app'
     ports:
       - '8080:8080'
     depends_on:
       postgres:
         condition: service_healthy
 
+# До лучших времен
 #  front:
 #    build:
 #      context: 'front'
