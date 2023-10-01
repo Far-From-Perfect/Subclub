@@ -15,16 +15,6 @@ public class MainPageController {
         return "home";
     }
 
-    @GetMapping("/secured")
-    public String securedData() {
-        return "securedData";
-    }
-
-    @GetMapping("/ad-panel")
-    public String adminPanel() {
-        return "Admin data";
-    }
-
     @GetMapping("/info")
     public String userData(Principal principal) {
         return principal.getName();

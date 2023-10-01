@@ -30,10 +30,8 @@ public class SecurityConfig {
         httpSecurity
                 .csrf().disable()
                 .authorizeHttpRequests((requests) ->
-                        requests.requestMatchers("/secured").authenticated()
-                                .requestMatchers("/info").authenticated()
+                        requests.requestMatchers("/info").authenticated()
                                 .requestMatchers("/favorites/{id}").access(new WebExpressionAuthorizationManager("hasRole('USER')"))
-                                .requestMatchers("/ad-panel").hasRole("ADMIN")
                                 .requestMatchers("/create-title").hasRole("ADMIN")
                                 .requestMatchers("/users").hasRole("ADMIN")
                                 .requestMatchers("/users/create-user").hasRole("ADMIN")
